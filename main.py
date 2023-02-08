@@ -1,14 +1,14 @@
 import json
 
 import requests
-raw_config_read = open("config1.json", "r")
-raw_config = raw_config_read.read()
-config = json.loads(raw_config)
+raw_config_read = open("config.json", "r")
+config = json.load(raw_config_read)
 #CF_Token = input('Please input Cloudflare token: ')
 #Zone_ID = input('Please input zone identifier: ')
 #domain = input('Please input domain(SLD): ')
 CF_Token = config["cf_token"]
 Zone_ID = config["zone_id"]
+domain = config["domain"]
 cf_header = {"Authorization": "Bearer %s" % CF_Token}
 cf_verify_url = 'https://api.cloudflare.com/client/v4/user/tokens/verify'
 cf_token_verify_result = requests.get(cf_verify_url, headers=cf_header)
@@ -24,4 +24,4 @@ zone_list = json.loads(dns_records_result.text);
 for i in zone_list['result']:
     print(i['name'], end=' ')
     print(i['id'])
-print(dns_records_result.text)
+#print(dns_records_result.text)
